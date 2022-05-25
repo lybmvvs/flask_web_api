@@ -23,10 +23,10 @@ class Main(Resource):
             y_vlp = vlpandipr['vlp']['p_wf']
             ipr = interpolate.interp1d(x_ipr, y_ipr, fill_value='extrapolate')
             vlp = interpolate.interp1d(x_vlp, y_vlp, fill_value='extrapolate')
-            max_values = []
-            max_values.append(max(x_ipr))
-            max_values.append(max(x_vlp))
-            xnew = np.linspace(0, max(max_values), max(max_values) * 1000 + 1)
+            #max_values = []
+            #max_values.append(max(x_ipr))
+            #max_values.append(max(x_vlp))
+            xnew = np.linspace(0, max(x_ipr+x_vlp), max(x_ipr+x_vlp) * 1000 + 1)
 
             def myIntersection(fun1, fun2, x0):
                 x_coord = []
@@ -50,10 +50,18 @@ class Main(Resource):
 
     def post(self,vlpandipr_status):
         parser = reqparse.RequestParser()
-        parser.add_argument("q_liq", type = list)
-        parser.add_argument("p_wf", type = list)
+        parser.add_argument("q_liq", action='append', type=int)
+        parser.add_argument("p_wf", action='append', type=int)
         vlpandipr[vlpandipr_status] = parser.parse_args()
         return vlpandipr
+
+    def put(self, vlpandipr_status):
+        parser = reqparse.RequestParser()
+        parser.add_argument("q_liq", action='append', type=int)
+        parser.add_argument("p_wf", action='append', type=int)
+        vlpandipr[vlpandipr_status] = parser.parse_args()
+        return vlpandipr
+
 
 api.add_resource(Main, "/api/vlpandipr/<string:vlpandipr_status>")
 api.init_app(app)
