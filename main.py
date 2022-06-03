@@ -2,10 +2,25 @@ from flask import Flask
 from flask_restful import Api, Resource, reqparse
 import numpy as np
 from scipy import interpolate
+#from flasgger import Swagger
 
 
 app = Flask(__name__)
 api = Api()
+
+#creating a template for flasgger
+#template = {
+#    "swagger:2.0",
+#    "info" : {
+#        "title":"Intersection dot between VLP and IPR",
+#        "description": "Little api based on Falsk and Flasgger",
+#        "contact":"github.com/lybmvvs",
+#        "version":"0.1",
+#        "basePath":"/api",
+#        "schemes":["http","https"]}
+#            }
+
+#swagger = Swagger(app)
 
 vlpandipr={
     "ipr":{"q_liq": [0,10,30], "p_wf": [100,90,80]},
