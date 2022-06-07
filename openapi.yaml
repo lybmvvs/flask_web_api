@@ -131,3 +131,117 @@ paths:
                       type: number
                     description: точки дебита
                     example: [92.5]
+  /api/vlpandipr/ipr:
+    get:
+      description: ""
+      parameters:
+        - name: ipr
+          in: query
+          description: Точки кривой IPR
+          required: True
+          schema:
+            type: object
+            properties:
+              q_liq:
+                type: array
+                items:
+                  type: number
+              p_wf:
+                type: array
+                items:
+                  type: number
+        - name: vlp
+          in: query
+          description: Точки кривой VLP
+          required: True
+          schema:
+            type: object
+            properties:
+              q_liq:
+                type: array
+                items:
+                  type: number
+              p_wf:
+                type: array
+                items:
+                  type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            /api/vlpandipr/data/:
+              schema:
+                type: object
+                properties:
+                  ipr:
+                    type: object
+                    properties:
+                      q_liq:
+                        type: array
+                        items:
+                          type: number
+                        description: точки дебита
+                        example: [ 0, 10, 30 ]
+                      p_wf:
+                        type: array
+                        items:
+                          type: number
+                        description: точки давления
+                        example: [ 100, 90, 90 ]
+  /api/vlpandipr/vlp:
+    get:
+      description: ""
+      parameters:
+        - name: ipr
+          in: query
+          description: Точки кривой IPR
+          required: True
+          schema:
+            type: object
+            properties:
+              q_liq:
+                type: array
+                items:
+                  type: number
+              p_wf:
+                type: array
+                items:
+                  type: number
+        - name: vlp
+          in: query
+          description: Точки кривой VLP
+          required: True
+          schema:
+            type: object
+            properties:
+              q_liq:
+                type: array
+                items:
+                  type: number
+              p_wf:
+                type: array
+                items:
+                  type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            /api/vlpandipr/data/:
+              schema:
+                type: object
+                properties:
+                  vlp:
+                    type: object
+                    properties:
+                      q_liq:
+                        type: array
+                        items:
+                          type: number
+                        description: точки дебита
+                        example: [ 0, 10, 20 ]
+                      p_wf:
+                        type: array
+                        items:
+                          type: number
+                        description: точки давления
+                        example: [ 85, 95, 100 ]
