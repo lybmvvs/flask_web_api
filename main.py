@@ -42,8 +42,7 @@ class Main(Resource):
             ipr = interpolate.interp1d(x_ipr, y_ipr, fill_value='extrapolate')
             vlp = interpolate.interp1d(x_vlp, y_vlp, fill_value='extrapolate')
             #max_values = []
-            #max_values.append(max(x_ipr))
-            #max_values.append(max(x_vlp))
+
             xnew = np.linspace(0, max(x_ipr+x_vlp), max(x_ipr+x_vlp) * 1000 + 1)
 
             def myIntersection(fun1, fun2, x0):
