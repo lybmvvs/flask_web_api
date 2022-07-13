@@ -1,37 +1,20 @@
-from flask import Blueprint, Flask, jsonify, url_for
-from flask_restful import Api, Resource, reqparse,fields, marshal_with
+from flask import Flask, jsonify
+from flask_restful import Api, Resource, reqparse
 import numpy as np
 from scipy import interpolate
-from flasgger import Swagger, swag_from
-import config
-
-
-
 
 app = Flask(__name__)
 api = Api(app)
-# swagger config
-app.config['SWAGGER'] = {
-    'title': 'My API',
-    'uiversion': 3,
-    "specs_route": "/swagger/"
+
+vlpandipr = {
+    "ipr": {"q_liq": [0, 10, 30], "p_wf": [100, 90, 80]},
+    "vlp": {"q_liq": [0, 10, 20], "p_wf": [85, 95, 100]}
 }
-swagger = Swagger(app)
-app.config.from_object(config.Config)
 
-
-
-
-
-vlpandipr={
-    "ipr":{"q_liq": [0,10,30], "p_wf": [100,90,80]},
-    "vlp": {"q_liq": [0,10,20], "p_wf": [85,95,100]}
-}
 
 class Main(Resource):
-    @swag_from('openapi.yaml')
-    def get(self,vlpandipr_status):
 
+    def get(self, vlpandipr_status):
         if vlpandipr_status == 'data':
             return jsonify(vlpandipr)
         if vlpandipr_status == 'result':
@@ -41,8 +24,6 @@ class Main(Resource):
             y_vlp = vlpandipr['vlp']['p_wf']
             ipr = interpolate.interp1d(x_ipr, y_ipr, fill_value='extrapolate')
             vlp = interpolate.interp1d(x_vlp, y_vlp, fill_value='extrapolate')
-            #max_values = []
-
             xnew = np.linspace(0, max(x_ipr+x_vlp), max(x_ipr+x_vlp) * 1000 + 1)
 
             def myIntersection(fun1, fun2, x0):
